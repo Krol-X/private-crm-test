@@ -1,27 +1,21 @@
-import '../css/app.css';
+import '~/css/app.css';
 import './bootstrap';
 
-import { createInertiaApp } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { createApp, h } from 'vue';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import { createInertiaApp } from '@inertiajs/svelte';
+import { mount } from 'svelte';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+import Default from './layouts/Default.svelte';
+import store from './store';
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) =>
-        resolvePageComponent(
-            `./Pages/${name}.vue`,
-            import.meta.glob('./Pages/**/*.vue'),
-        ),
-    setup({ el, App, props, plugin }) {
-        return createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .use(ZiggyVue)
-            .mount(el);
-    },
-    progress: {
-        color: '#4B5563',
-    },
+  resolve: (name) => {
+    const pages = import.meta.glob('./pages/**/*.svelte', { eager: true });
+    const page = pages[`./pages/${name}.svelte`];
+    return { default: page.default, layout: Default };
+  },
+  setup({ el, App, props }) {
+    // global 'store' prop
+    props.initialPage.props.store = store;
+    mount(App, { target: el, props });
+  }
 });

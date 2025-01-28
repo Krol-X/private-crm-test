@@ -1,0 +1,11 @@
+# Package Managers
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+artisan
+bootstrap
+config
+database
+public
+storage
