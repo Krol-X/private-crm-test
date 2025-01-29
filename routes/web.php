@@ -10,32 +10,38 @@ Route::get('/', function () {
     return Inertia::render('Home', []);
 });
 
-Route::resource('/orders', OrdersController::class)->only([
-    'index', // inertia
-    // 'create',
-    'store',
-    'show',
-    // 'edit',
-    // 'update',
-    // 'destroy',
-]);
+Route::resource('/orders', OrdersController::class)
+    ->parameter('orders', 'order_id')
+    ->only([
+        'index', // inertia
+        // 'create',
+        'store',
+        'show',
+        // 'edit',
+        // 'update',
+        // 'destroy',
+    ]);
 
-Route::resource('/tariffs', TariffsController::class)->only([
-    'index', // inertia
-    // 'create',
-    'store',
-    'show',
-    // 'edit',
-    'update',
-    'destroy',
-]);
+Route::resource('/tariffs', TariffsController::class)
+    ->parameter('tariffs', 'tariff_id')
+    ->only([
+        'index', // inertia
+        // 'create',
+        'store',
+        'show',
+        // 'edit',
+        'update',
+        'destroy',
+    ]);
 
-Route::resource('/rations', RationsController::class)->only([
-    'index',
-    // 'create',
-    // 'store',
-    'show',
-    // 'edit',
-    // 'update',
-    // 'destroy',
-]);
+Route::resource('/rations', RationsController::class)
+    ->parameter('rations', 'ration_id')
+    ->only([
+        'index',
+        // 'create',
+        // 'store',
+        'show',
+        // 'edit',
+        // 'update',
+        // 'destroy',
+    ]);
