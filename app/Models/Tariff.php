@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Tariff extends Model
 {
@@ -17,4 +18,9 @@ class Tariff extends Model
         'ration_name',
         'cooking_day_before',
     ];
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 }
