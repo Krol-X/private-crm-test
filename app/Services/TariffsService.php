@@ -4,30 +4,58 @@ namespace App\Services;
 
 use App\Interfaces\Services\TariffsServiceInterface;
 
+use App\Models\Tariff;
+use Illuminate\Database\Eloquent\Collection;
+
 class TariffsService implements TariffsServiceInterface
 {
-    public function getTariffs()
+    /**
+     * @return Collection<Tariff>
+     */
+    public function getTariffs(): Collection
     {
-        // todo
+        $tariffs = Tariff::all();
+
+        return $tariffs;
     }
 
-    public function getTariff(int $id)
+    public function getTariff(int $id): ?Tariff
     {
-        // todo
+        $tariff = Tariff::find($id);
+
+        return $tariff;
     }
 
-    public function addTariff(array $fields)
+    public function addTariff(array $fields): Tariff
     {
-        // todo
+        $tariff = new Tariff($fields);
+        $tariff->save();
+
+        return $tariff;
     }
 
-    public function updateTariff(array $fields)
+    public function updateTariff(int $id, array $fields): ?Tariff
     {
-        // todo
+        $tariff = $this->getTariff($id);
+        if (!$tariff) {
+            return null;
+        }
+
+        $tariff->fill($fields);
+        $tariff->save();
+
+        return $tariff;
     }
 
-    public function removeTariff(int $id)
+    public function removeTariff(int $id): ?Tariff
     {
-        // todo
+        $tariff = $this->getTariff($id);
+        if (!$tariff) {
+            return null;
+        }
+
+        $tariff->delete();
+
+        return $tariff;
     }
 }

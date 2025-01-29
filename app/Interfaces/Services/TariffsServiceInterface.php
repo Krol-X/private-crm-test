@@ -7,6 +7,6 @@ interface TariffsServiceInterface
     function getTariffs();
     function getTariff(int $id);
     function addTariff(array $fields);
-    function updateTariff(array $fields);
+    function updateTariff(int $id, array $fields);
     function removeTariff(int $id);
 }
