@@ -3,6 +3,3 @@
 </script>
 
 Home page
-
-<style>
-</style>

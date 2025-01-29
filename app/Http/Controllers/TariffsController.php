@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Interfaces\Services\TariffsServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
@@ -37,7 +38,9 @@ class TariffsController extends Controller
         }
 
         $tariff = $this->tariffs->addTariff($data->validated());
+
         return Response::json($tariff);
+//        return Redirect::route('tariffs');
     }
 
     function show(Request $request, $tariff_id): JsonResponse
@@ -79,7 +82,7 @@ class TariffsController extends Controller
         ]);
     }
 
-    function delete(Request $request, $tariff_id): JsonResponse
+    function destroy(Request $request, $tariff_id): JsonResponse
     {
         $this->tariffs->removeTariff($tariff_id);
 
