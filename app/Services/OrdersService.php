@@ -19,14 +19,14 @@ class OrdersService implements OrdersServiceInterface
         return $orders;
     }
 
-    public function getOrder(int $id)
+    public function getOrder(int $id): ?Order
     {
         $order = Order::find($id);
 
         return $order;
     }
 
-    public function addOrder(array $fields)
+    public function addOrder(array $fields): Order
     {
         $order = new Order($fields);
         $order["created_at"] = Date::now();
