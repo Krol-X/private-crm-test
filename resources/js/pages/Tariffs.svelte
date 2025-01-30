@@ -1,9 +1,12 @@
 <script>
+  import { onMount, onDestroy } from 'svelte';
   import axios from 'axios';
 
+  import store from '@/store';
   import { Button, Column, Context, Input, Row } from '@/lib/structe/index.js';
   import CheckBox from '@/lib/structe/atoms/form/CheckBox.svelte';
   import { router as Inertia } from '@inertiajs/svelte';
+  import TariffForm from '@/components/forms/TariffForm.svelte';
 
   let { tariffs } = $props();
 
@@ -20,6 +23,18 @@
     await axios.delete(`/tariffs/${id}`);
     Inertia.reload({ only: ['tariffs'] });
   }
+
+  function openModal() {
+    store.modal.open(TariffForm);
+  }
+
+  onMount(() => {
+    store.events.assign('new-item', openModal, true);
+  });
+
+  onDestroy(() => {
+    store.events.unassign('new-item', openModal);
+  });
 </script>
 
 <Context>
@@ -43,7 +58,7 @@
       </Row>
       <Row class="w-full justify-between">
         <div>Готовить за день</div>
-        <div>{tariff.cooking_day_before? 'Да': 'Нет'}</div>
+        <div>{tariff.cooking_day_before ? 'Да' : 'Нет'}</div>
       </Row>
       <Button click={() => removeTariff(tariff.id)}>Удалить</Button>
     </Column>

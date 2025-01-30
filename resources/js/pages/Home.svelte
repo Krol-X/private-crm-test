@@ -1,5 +1,5 @@
 <script>
-  const { store } = $props();
+  import store from '@/store';
 </script>
 
 Home page

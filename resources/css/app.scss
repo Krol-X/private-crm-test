@@ -2,11 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-input, button {
-  border: thin solid black;
-}
-
-.menulink {
+.menu-item {
   position: relative;
   display: inline-block;
 
@@ -24,8 +20,7 @@ input, button {
     transition: transform 0.25s ease;
   }
 
-  &:hover::after,
-  &:focus::after {
+  &:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
   }

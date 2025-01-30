@@ -1,5 +1,7 @@
-import { modal } from './modal.svelte.js';
+import { modal_store } from './modal.svelte.js';
+import { events_store } from './events.svelte.js';
 
 export default {
-  modal
+  modal: modal_store,
+  events: events_store
 };

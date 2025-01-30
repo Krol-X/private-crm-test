@@ -1,5 +1,7 @@
 <script>
-  const { children, store } = $props();
+  import store from '@/store/index.js';
+
+  const { children } = $props();
 
   import Menu from './Components/Menu.svelte';
   import { Modal } from '@/lib/structe/index.js';

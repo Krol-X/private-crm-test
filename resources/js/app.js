@@ -14,8 +14,6 @@ createInertiaApp({
     return { default: page.default, layout: Default };
   },
   setup({ el, App, props }) {
-    // global 'store' prop
-    props.initialPage.props.store = store;
     mount(App, { target: el, props });
   }
 });

@@ -1,4 +1,4 @@
-export class Modal {
+export class ModalStore {
   #component = $state(null);
   #with_blur = $state(false);
 
@@ -20,4 +20,4 @@ export class Modal {
   }
 }
 
-export const modal = new Modal();
+export const modal_store = new ModalStore();

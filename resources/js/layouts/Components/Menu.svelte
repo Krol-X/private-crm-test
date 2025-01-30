@@ -1,11 +1,20 @@
 <script>
-  import MenuLink from '@/Layouts/Components/MenuLink.svelte'
+  const { event } = $props();
+
+  import store from '@/store';
+
+  import MenuItem from './MenuItem.svelte';
+  import IconPlus from '~/assets/icon-plus-square-o.svelte';
 </script>
 
 <div class="menu">
-  <MenuLink text="Главная" href="/" />
-  <MenuLink text="Заказы" href="/orders" />
-  <MenuLink text="Тарифы" href="/tariffs" />
+  <MenuItem href="/">Главная</MenuItem>
+  <MenuItem href="/orders">Заказы</MenuItem>
+  <MenuItem href="/tariffs">Тарифы</MenuItem>
+  <div class="flex-1"></div>
+  <MenuItem click={() => store.events.dispatch('new-item')}>
+    <IconPlus />
+  </MenuItem>
 </div>
 
 <style lang="scss">
