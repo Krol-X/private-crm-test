@@ -16,7 +16,6 @@ class OrdersController extends Controller
     private TariffsServiceInterface $tariffs;
     private RationsServiceInterface $rations;
 
-
     function __construct(
         OrdersServiceInterface  $orders_service,
         TariffsServiceInterface $tariffs_service,

@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ration', function (Blueprint $table) {
+        Schema::create('rations', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Order::class);
             $table->timestamp('cooking_date');
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ration');
+        Schema::dropIfExists('rations');
     }
 };

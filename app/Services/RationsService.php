@@ -41,10 +41,11 @@ class RationsService implements RationsServiceInterface
         $ration = new Ration();
 
         $ration['order_id'] = $fields['order_id'];
-        $date = Date::fromSerialized($fields['date']);
+        $date = Date::parse($fields['date']);
         $cooking_day_before = $fields['cooking_day_before'];
-        $ration['cooking_date'] = $cooking_day_before ? $date->subDay() : $date;
+        $ration['cooking_day_before'] = $cooking_day_before;
         $ration['delivery_date'] = $date;
+        $ration['cooking_date'] = $cooking_day_before ? $date->copy()->subDay() : $date;
         $ration->save();
 
         return $ration;
@@ -56,9 +57,9 @@ class RationsService implements RationsServiceInterface
         if (!$order) {
             return;
         }
-        $cooking_day_before = $order->tariff()['cooking_day_before'];
-        $first_date = Date::fromSerialized($fields['first_date']);
-        $last_date = Date::fromSerialized($fields['last_date']);
+        $cooking_day_before = $order->tariff->cooking_day_before;
+        $first_date = Date::parse($fields['first_date']);
+        $last_date = Date::parse($fields['last_date']);
         $schedule_type = $order['schedule_type'];
 
         if ($schedule_type == 'EVERY_DAY') {
@@ -80,14 +81,18 @@ class RationsService implements RationsServiceInterface
         } else if ($schedule_type == 'EVERY_OTHER_DAY_TWICE') {
             $is_tomorrow = false;
 
-            for ($date = $first_date; $date <= $last_date; $date = $date->addDay()) {
+            for ($current = $first_date->copy(); $first_date <= $last_date; $first_date->addDay()) {
                 $this->addRation([
                     'order_id' => $fields['order_id'],
-                    'date' => $is_tomorrow ? $date->subDay() : $date,
+                    'date' => $current,
                     'cooking_day_before' => $cooking_day_before
                 ]);
 
                 $is_tomorrow = !$is_tomorrow;
+
+                if (!$is_tomorrow) {
+                    $current->addDays(2);
+                }
             }
         }
     }

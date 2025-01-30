@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
             return new TariffsService();
         });
         $this->app->singleton('App\Interfaces\Services\RationsServiceInterface', function ($app) {
-            return new RationsService();
+            return new RationsService($app->make('App\Interfaces\Services\OrdersServiceInterface'));
         });
     }
 
