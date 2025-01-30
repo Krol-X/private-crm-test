@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\Services\OrdersServiceInterface;
+use App\Interfaces\Services\RationsServiceInterface;
 use App\Interfaces\Services\TariffsServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -13,15 +14,18 @@ class OrdersController extends Controller
 {
     private OrdersServiceInterface $orders;
     private TariffsServiceInterface $tariffs;
+    private RationsServiceInterface $rations;
 
 
     function __construct(
         OrdersServiceInterface  $orders_service,
-        TariffsServiceInterface $tariffs_service
+        TariffsServiceInterface $tariffs_service,
+        RationsServiceInterface $rations_service
     )
     {
         $this->orders = $orders_service;
         $this->tariffs = $tariffs_service;
+        $this->rations = $rations_service;
     }
 
     function index(Request $request)
@@ -48,7 +52,16 @@ class OrdersController extends Controller
             return response()->json(['error' => $data->errors()], 400);
         }
 
-        $order = $this->orders->addOrder($data->validated());
+        $fields = $data->validated();
+        $order = $this->orders->addOrder($fields);
+
+        $this->rations->addRations([
+            'order_id' => $order->id,
+            'schedule_type' => $fields['schedule_type'],
+            'first_date' => $fields['first_date'],
+            'last_date' => $fields['last_date'],
+        ]);
+        
         return Response::json($order);
     }
 
