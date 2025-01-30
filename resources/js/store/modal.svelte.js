@@ -13,7 +13,7 @@ export class ModalStore {
 
   open(component, params, with_blur) {
     this.#component = component;
-    this.#params = params || {};
+    this.#params = params || this.#params;
     this.#with_blur = with_blur;
   }
 

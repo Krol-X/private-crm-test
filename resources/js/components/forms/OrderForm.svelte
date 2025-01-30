@@ -3,9 +3,11 @@
   import { Button, Column, Context, Input, Text, Row, Select } from '@/lib/structe';
   import { router as Inertia } from '@inertiajs/svelte';
   import axios from 'axios';
+  import RationsForm from './RationsForm.svelte';
 
   let state = $state(store.modal.params);
-  let is_new = $derived(state.fields?.id === undefined);
+  const order_id = $derived(state.fields?.id);
+  let is_new = $derived(order_id === undefined);
 
   let tariffOptions = $derived(
     state?.tariffs?.map(
@@ -38,7 +40,7 @@
   };
 
   const openRations = () => {
-    // todo
+    store.modal.open(RationsForm);
   };
 
   const css_title = 'text-center text-lg font-bold';
@@ -50,7 +52,7 @@
 <Context context={state.fields}>
   <Column class={css_form}>
     <Text class={css_title}>
-      {is_new ? 'Новый заказ' : `Заказ ${state.fields.id}`}
+      {is_new ? 'Новый заказ' : `Заказ №${order_id}`}
     </Text>
 
     <Column class={css_column}>

@@ -29,8 +29,8 @@ class RationsController extends Controller
             return response()->json(['error' => $data->errors()], 400);
         }
 
-        $fields = $data->validated();
-        $rations = $this->rations->getRations($fields['order_id']);
+        $fields = collect($data->validated());
+        $rations = $this->rations->getRations($fields->get('order_id', null));
 
         if ($rations !== null) {
             return Response::json([
