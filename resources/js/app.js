@@ -5,7 +5,6 @@ import { createInertiaApp } from '@inertiajs/svelte';
 import { mount } from 'svelte';
 
 import Default from './layouts/Default.svelte';
-import store from './store';
 
 createInertiaApp({
   resolve: (name) => {

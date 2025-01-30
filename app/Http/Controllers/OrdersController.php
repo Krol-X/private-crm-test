@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\Services\OrdersServiceInterface;
+use App\Interfaces\Services\TariffsServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -11,16 +12,23 @@ use Inertia\Inertia;
 class OrdersController extends Controller
 {
     private OrdersServiceInterface $orders;
+    private TariffsServiceInterface $tariffs;
 
-    function __construct(OrdersServiceInterface $orders_service)
+
+    function __construct(
+        OrdersServiceInterface  $orders_service,
+        TariffsServiceInterface $tariffs_service
+    )
     {
         $this->orders = $orders_service;
+        $this->tariffs = $tariffs_service;
     }
 
     function index(Request $request)
     {
         return Inertia::render('Orders', [
             'orders' => $this->orders->getOrders(),
+            'tariffs' => $this->tariffs->getTariffs()
         ]);
     }
 

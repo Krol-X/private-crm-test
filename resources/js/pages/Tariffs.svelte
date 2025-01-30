@@ -8,7 +8,7 @@
   let { tariffs } = $props();
 
   function openModal(params) {
-    store.modal.open(TariffForm, params);
+    store.modal.open(TariffForm, { fields: params ?? {} });
   }
 
   onMount(() => {

@@ -9,6 +9,9 @@
     controlStyle = '',
     name = '',
     type = 'text',
+    min,
+    max,
+    pattern,
     value = $bindable(),
     children,
     after = null
@@ -30,6 +33,9 @@
       style={controlStyle}
       use:typeAction
       {name}
+      {min}
+      {max}
+      {pattern}
       bind:value={context[name]}
     />
   {:else}
@@ -38,6 +44,9 @@
       style={controlStyle}
       use:typeAction
       {name}
+      {min}
+      {max}
+      {pattern}
       bind:value
     />
   {/if}

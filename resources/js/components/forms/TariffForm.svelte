@@ -1,19 +1,19 @@
 <script>
-  import store from "@/store";
+  import store from '@/store';
   import { Button, Column, Context, Input, Text, CheckBox, Row } from '@/lib/structe/index.js';
   import { router as Inertia } from '@inertiajs/svelte';
   import axios from 'axios';
 
-  let fields = $state(store.modal.params);
-  let is_new = $derived(fields.id === undefined);
+  let state = $state(store.modal.params);
+  let is_new = $derived(state.fields?.id === undefined);
 
-  const onSave = async() => {
+  const onSave = async () => {
     if (is_new) {
-      await axios.post('/tariffs', fields);
+      await axios.post('/tariffs', state.fields);
     } else {
-      await axios.put(`/tariffs/${fields.id}`, fields);
+      await axios.put(`/tariffs/${state.fields.id}`, state.fields);
     }
-    Inertia.reload({ only: ['tariffs'] });
+    Inertia.reload();
     store.modal.close();
   };
 
@@ -21,22 +21,22 @@
     store.modal.close();
   };
 
-  const onDelete = async() => {
-    await axios.delete(`/tariffs/${fields.id}`);
-    Inertia.reload({ only: ['tariffs'] });
+  const onDelete = async () => {
+    await axios.delete(`/tariffs/${state.fields.id}`);
+    Inertia.reload();
     store.modal.close();
   };
 
-  const css_title = "text-center text-lg font-bold"
-  const css_form = "sm:w-96 w-full border border-black rounded-lg p-4 bg-white";
-  const css_column = "mt-4 gap-1";
-  const css_button = "w-full border border-black";
+  const css_title = 'text-center text-lg font-bold';
+  const css_form = 'sm:w-96 w-full border border-black rounded-lg p-4 bg-white';
+  const css_column = 'mt-4 gap-1';
+  const css_button = 'w-full border border-black';
 </script>
 
-<Context context={fields}>
+<Context context={state.fields}>
   <Column class={css_form}>
     <Text class={css_title}>
-      {is_new? 'Новый тариф': `Тариф ${fields.id}`}
+      {is_new ? 'Новый тариф' : `Тариф ${state.fields.id}`}
     </Text>
     <Column class={css_column}>
       <Input name="ration_name">Имя рациона</Input>
