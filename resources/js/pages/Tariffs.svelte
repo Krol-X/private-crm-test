@@ -22,11 +22,14 @@
 
 <Column class="tariffs">
   {#each tariffs as tariff(tariff.id)}
-    <Column class="border border-black p-1" click={() => openModal(tariff)}>
+    <Column class="border-2 border-black hover:border-blue-600 p-2 rounded-lg cursor-pointer"
+            click={() => openModal(tariff)}
+    >
       <Row class="w-full justify-between">
         <div>Id</div>
         <div>{tariff.id}</div>
       </Row>
+      <hr class="border-inherit" />
       <Row class="w-full justify-between">
         <div>Имя рациона</div>
         <div>{tariff.ration_name}</div>

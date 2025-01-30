@@ -31,11 +31,14 @@
 
 <Column class="orders">
   {#each orders as order(order.id)}
-    <Column class="border border-black p-2 rounded-lg" click={() => openModal(order)}>
+    <Column class="border-2 border-black hover:border-blue-600 p-2 rounded-lg cursor-pointer"
+            click={() => openModal(order)}
+    >
       <Row class="w-full justify-between">
         <div>ID заказа</div>
         <div>{order.id}</div>
       </Row>
+      <hr class="border-inherit" />
       <Row class="w-full justify-between">
         <div>Клиент</div>
         <div>{order.client_name}</div>
@@ -71,7 +74,7 @@
 
 <style>
   :global(.orders) {
-    max-width: 48rem;
+    max-width: 32rem;
     margin-left: auto;
     margin-right: auto;
     gap: 1rem;
