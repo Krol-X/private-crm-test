@@ -1,13 +1,19 @@
 export class ModalStore {
   #component = $state(null);
+  #params = $state({});
   #with_blur = $state(false);
 
   get component() {
     return this.#component;
   }
 
-  open(component, with_blur) {
+  get params() {
+    return $state.snapshot(this.#params);
+  }
+
+  open(component, params, with_blur) {
     this.#component = component;
+    this.#params = params || {};
     this.#with_blur = with_blur;
   }
 

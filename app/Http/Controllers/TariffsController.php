@@ -61,8 +61,8 @@ class TariffsController extends Controller
     function update(Request $request, $tariff_id): JsonResponse
     {
         $data = Validator::make($request->all(), [
-            'ration_name' => 'string|optional',
-            'cooking_day_before' => 'boolean|optional',
+            'ration_name' => 'string|nullable',
+            'cooking_day_before' => 'boolean|nullable',
         ]);
 
         if ($data->fails()) {

@@ -11,13 +11,13 @@
     value = '',
     checked = $bindable(),
     children,
-    after = null
+    before = null
   } = $props();
 </script>
 
-<div class={className} style={styleName}>
-  {#if children}
-    <div>{@render children()}</div>
+<div class={`flex flex-row gap-2 items-center ${className}`} style={styleName}>
+  {#if before}
+    <div>{@render before()}</div>
   {/if}
 
   {#if checked === undefined && context}
@@ -40,7 +40,14 @@
     />
   {/if}
 
-  {#if after}
-    <div>{@render after()}</div>
+  {#if children}
+    <div>{@render children()}</div>
   {/if}
 </div>
+
+<style>
+  input {
+    width: 1rem;
+    height: 1rem;
+  }
+</style>

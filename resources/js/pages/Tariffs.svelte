@@ -1,31 +1,14 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
-  import axios from 'axios';
 
   import store from '@/store';
-  import { Button, Column, Context, Input, Row } from '@/lib/structe/index.js';
-  import CheckBox from '@/lib/structe/atoms/form/CheckBox.svelte';
-  import { router as Inertia } from '@inertiajs/svelte';
+  import { Column, Row } from '@/lib/structe/index.js';
   import TariffForm from '@/components/forms/TariffForm.svelte';
 
   let { tariffs } = $props();
 
-  async function addTariff(e, context) {
-    try {
-      await axios.post('/tariffs', context);
-      Inertia.reload({ only: ['tariffs'] });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function removeTariff(id) {
-    await axios.delete(`/tariffs/${id}`);
-    Inertia.reload({ only: ['tariffs'] });
-  }
-
-  function openModal() {
-    store.modal.open(TariffForm);
+  function openModal(params) {
+    store.modal.open(TariffForm, params);
   }
 
   onMount(() => {
@@ -37,17 +20,9 @@
   });
 </script>
 
-<Context>
-  <Column>
-    <Input name="ration_name">Имя рациона</Input>
-    <CheckBox name="cooking_day_before">Готовить за день</CheckBox>
-    <Button click={addTariff}>Добавить</Button>
-  </Column>
-</Context>
-
 <Column class="tariffs">
   {#each tariffs as tariff(tariff.id)}
-    <Column class="border border-black p-1">
+    <Column class="border border-black p-1" click={() => openModal(tariff)}>
       <Row class="w-full justify-between">
         <div>Id</div>
         <div>{tariff.id}</div>
@@ -60,14 +35,12 @@
         <div>Готовить за день</div>
         <div>{tariff.cooking_day_before ? 'Да' : 'Нет'}</div>
       </Row>
-      <Button click={() => removeTariff(tariff.id)}>Удалить</Button>
     </Column>
   {/each}
 </Column>
 
 <style>
   :global(.tariffs) {
-    margin-top: 1rem;
     max-width: 32rem;
     margin-left: auto;
     margin-right: auto;
