@@ -20,11 +20,21 @@ class RationsService implements RationsServiceInterface
     }
 
     /**
-     * @return Collection<Ration>
+     * @return ?Collection<Ration>
      */
-    public function getRations(): Collection
+    public function getRations(int $order_id = null): ?Collection
     {
-        $rations = Ration::all();
+        $rations = null;
+
+        if ($order_id) {
+            $order = $this->orders->getOrder($order_id);
+
+            if ($order) {
+                $rations = $order->rations;
+            }
+        } else {
+            $rations = Ration::all();
+        }
 
         return $rations;
     }

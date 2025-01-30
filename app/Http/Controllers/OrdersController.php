@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Interfaces\Services\OrdersServiceInterface;
 use App\Interfaces\Services\RationsServiceInterface;
 use App\Interfaces\Services\TariffsServiceInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -27,7 +28,7 @@ class OrdersController extends Controller
         $this->rations = $rations_service;
     }
 
-    function index(Request $request)
+    function index(Request $request): \Inertia\Response
     {
         return Inertia::render('Orders', [
             'orders' => $this->orders->getOrders(),
@@ -35,7 +36,7 @@ class OrdersController extends Controller
         ]);
     }
 
-    function store(Request $request)
+    function store(Request $request): JsonResponse
     {
         $data = Validator::make($request->all(), [
             'client_name' => 'string|required',
@@ -64,7 +65,7 @@ class OrdersController extends Controller
         return Response::json($order);
     }
 
-    function show(Request $request, $order_id)
+    function show(Request $request, $order_id): JsonResponse
     {
         $order = $this->orders->getOrder($order_id);
 

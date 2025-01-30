@@ -37,6 +37,10 @@
     store.modal.close();
   };
 
+  const openRations = () => {
+    // todo
+  };
+
   const css_title = 'text-center text-lg font-bold';
   const css_form = 'sm:w-96 w-full border border-black rounded-lg p-4 bg-white';
   const css_column = 'mt-4 gap-1';
@@ -77,15 +81,24 @@
       </Input>
     </Column>
 
-    <Row class="mt-4 gap-4">
-      {#if is_new}
+    {#if is_new}
+      <Row class="mt-4 gap-4">
         <Button click={onSave} class="{css_button} bg-black text-white">
           Сохранить
         </Button>
-      {/if}
-      <Button click={onClose} class={css_button}>
-        Закрыть
-      </Button>
-    </Row>
+        <Button click={onClose} class={css_button}>
+          Закрыть
+        </Button>
+      </Row>
+    {:else}
+      <Column class="mt-4 gap-1">
+        <Button click={openRations} class="{css_button} bg-black text-white">
+          Рационы
+        </Button>
+        <Button click={onClose} class={css_button}>
+          Закрыть
+        </Button>
+      </Column>
+    {/if}
   </Column>
 </Context>

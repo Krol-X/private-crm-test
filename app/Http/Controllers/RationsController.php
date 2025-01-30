@@ -2,18 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\Services\RationsServiceInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 
 class RationsController extends Controller
 {
-    function index(Request $request)
+    private RationsServiceInterface $rations;
+
+    function __construct(
+        RationsServiceInterface $rations_service
+    )
     {
-        return Response::json();
+        $this->rations = $rations_service;
     }
 
-    function show(Request $request)
+    function index(Request $request): JsonResponse
     {
-        return Response::json();
+        $data = Validator::make($request->all(), [
+            'order_id' => 'nullable|integer|exists:orders,id',
+        ]);
+
+        if ($data->fails()) {
+            return response()->json(['error' => $data->errors()], 400);
+        }
+
+        $fields = $data->validated();
+        $rations = $this->rations->getRations($fields['order_id']);
+
+        if ($rations !== null) {
+            return Response::json([
+                'data' => $rations,
+            ]);
+        } else {
+            return Response::json(
+                ['error' => 'The requested order was not found'], 404
+            );
+        }
+    }
+
+    function show(Request $request, $ration_id): JsonResponse
+    {
+        $ration = $this->rations->getRation($ration_id);
+
+        if ($ration !== null) {
+            return Response::json([
+                'data' => $ration,
+            ]);
+        } else {
+            return Response::json(
+                ['error' => 'The requested ration was not found'], 404
+            );
+        }
     }
 }
