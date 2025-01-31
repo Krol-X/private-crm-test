@@ -49,7 +49,7 @@
       </Row>
       <Row class="w-full justify-between">
         <div>Тариф</div>
-        <div>{order.tariff.ration_name}</div>
+        <div>{order.tariff?.ration_name}</div>
       </Row>
       <Row class="w-full justify-between">
         <div>Расписание</div>

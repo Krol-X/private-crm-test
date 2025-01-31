@@ -1,12 +1,37 @@
 # Web-приложение для работы с заказами питания по подписке
 
+## Развёртывание проекта
+
+```shell
+# 1. Установка зависимостей
+composer install
+npm install # yarn
+
+# 2. Конфигурация и инициализация проекта
+cp ./.env.example .env
+# vim .env
+php artisan db:create
+php artisan migrate
+php artisan key:generate
+
+# 3. Запуск проекта
+npm start # yarn start
+# или одновременно
+yarn dev
+php artisan serve
+```
+
 ## Todo
 
-- [ ] Вывод рационов на фронтенде
-- [ ] Рефакторинг и оптимизация на сервере
-- [ ] Тесты для сервисов
-- [ ] Пагинация
-- [ ] Поддержка SSR
+- [ ] Улучшение
+    - [ ] Пагинация
+    - [ ] Поддержка SSR для деплоя
+    - [ ] Тесты для сервисов
+    - [ ] Конфигурация docker/compose
+- [ ] Рефакторинг
+  - [ ] Поправить inertia restapi
+  - [ ] Добавление request/resource
+
 
 ## Исходное задание
 

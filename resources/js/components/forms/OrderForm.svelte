@@ -64,9 +64,15 @@
         Телефон (11 цифр)
       </Input>
 
-      <Select name="tariff_id" options={tariffOptions}>
-        Тариф
-      </Select>
+      {#if is_new}
+        <Select name="tariff_id" options={tariffOptions} >
+          Тариф
+        </Select>
+      {:else}
+        <Input value={state.fields?.tariff.ration_name}>
+          Тариф
+        </Input>
+      {/if}
 
       <Select name="schedule_type" options={scheduleOptions}>
         Тип расписания
