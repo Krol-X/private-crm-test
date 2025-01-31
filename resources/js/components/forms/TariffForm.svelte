@@ -36,7 +36,7 @@
 <Context context={state.fields}>
   <Column class={css_form}>
     <Text class={css_title}>
-      {is_new ? 'Новый тариф' : `Тариф ${state.fields.id}`}
+      {is_new ? 'Новый тариф' : `Тариф №${state.fields.id}`}
     </Text>
     <Column class={css_column}>
       <Input name="ration_name">Имя рациона</Input>

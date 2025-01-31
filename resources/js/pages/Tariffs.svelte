@@ -26,7 +26,7 @@
             click={() => openModal(tariff)}
     >
       <Row class="w-full justify-between">
-        <div>Id</div>
+        <div>Id тарифа</div>
         <div>{tariff.id}</div>
       </Row>
       <hr class="border-inherit" />
