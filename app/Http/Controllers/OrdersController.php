@@ -40,7 +40,7 @@ class OrdersController extends Controller
     {
         $data = Validator::make($request->all(), [
             'client_name' => 'string|required',
-            'client_phone' => 'string|size:11|required',
+            'client_phone' => 'string|size:11|required|unique:orders,client_phone',
             'tariff_id' => 'integer|required|exists:tariffs,id',
             'schedule_type' => 'in:EVERY_DAY,EVERY_OTHER_DAY,EVERY_OTHER_DAY_TWICE|required',
             'comment' => 'string|required',
@@ -61,7 +61,7 @@ class OrdersController extends Controller
             'first_date' => $fields['first_date'],
             'last_date' => $fields['last_date'],
         ]);
-        
+
         return Response::json($order);
     }
 
