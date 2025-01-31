@@ -14,14 +14,14 @@ class OrdersService implements OrdersServiceInterface
      */
     public function getOrders(): Collection
     {
-        $orders = Order::all();
+        $orders = Order::with('tariff')->get();
 
         return $orders;
     }
 
     public function getOrder(int $id): ?Order
     {
-        $order = Order::find($id);
+        $order = Order::with('tariff')->find($id);
 
         return $order;
     }
