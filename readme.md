@@ -23,15 +23,13 @@ php artisan serve
 
 ## Todo
 
+- [x] Рефакторинг
+  - [x] Добавление requests/resources/collections
 - [ ] Улучшение
     - [ ] Пагинация
     - [ ] Поддержка SSR для деплоя
     - [ ] Тесты для сервисов
     - [ ] Конфигурация docker/compose
-- [ ] Рефакторинг
-  - [ ] Поправить inertia restapi
-  - [ ] Добавление request/resource
-
 
 ## Исходное задание
 

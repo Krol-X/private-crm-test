@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TariffsStoreRequest;
 use App\Http\Requests\TariffsUpdateRequest;
+use App\Http\Resources\TariffCollection;
+use App\Http\Resources\TariffResource;
 use App\Interfaces\Services\TariffsServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,25 +24,23 @@ class TariffsController extends Controller
     function index(Request $request): \Inertia\Response
     {
         return Inertia::render('Tariffs', [
-            'tariffs' => $this->tariffs->getTariffs(),
+            'tariffs' => new TariffCollection($this->tariffs->getTariffs()),
         ]);
     }
 
-    function store(TariffsStoreRequest $request): JsonResponse
+    function store(TariffsStoreRequest $request): TariffResource|JsonResponse
     {
         $tariff = $this->tariffs->addTariff($request->validated());
 
-        return Response::json($tariff);
+        return new TariffResource($tariff);
     }
 
-    function show(Request $request, $tariff_id): JsonResponse
+    function show(Request $request, $tariff_id): TariffResource|JsonResponse
     {
         $tariff = $this->tariffs->getTariff($tariff_id);
 
         if ($tariff !== null) {
-            return Response::json([
-                'data' => $tariff,
-            ]);
+            return new TariffResource($tariff);
         } else {
             return Response::json(
                 ['error' => 'The requested tariff was not found'], 404
@@ -48,7 +48,7 @@ class TariffsController extends Controller
         }
     }
 
-    function update(TariffsUpdateRequest $request, $tariff_id): JsonResponse
+    function update(TariffsUpdateRequest $request, $tariff_id): TariffResource|JsonResponse
     {
         $tariff = $this->tariffs->updateTariff($tariff_id, $request->validated());
 
@@ -58,9 +58,7 @@ class TariffsController extends Controller
             );
         }
 
-        return Response::json([
-            'data' => $tariff,
-        ]);
+        return new TariffResource($tariff);
     }
 
     function destroy(Request $request, $tariff_id): JsonResponse

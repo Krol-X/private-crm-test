@@ -13,7 +13,7 @@
   };
 
   function openModal(params) {
-    if (tariffs.length > 0) {
+    if (tariffs.meta.total > 0) {
       store.modal.open(OrderForm, { fields: params ?? {}, tariffs });
     } else {
       alert('Добавьте хотя-бы один тариф!');
@@ -30,7 +30,7 @@
 </script>
 
 <Column class="orders">
-  {#each orders as order(order.id)}
+  {#each orders.data as order(order.id)}
     <Column class="border-2 border-black hover:border-blue-600 p-2 rounded-lg cursor-pointer"
             click={() => openModal(order)}
     >

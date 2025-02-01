@@ -10,7 +10,7 @@
   let is_new = $derived(order_id === undefined);
 
   let tariffOptions = $derived(
-    state?.tariffs?.map(
+    state?.tariffs?.data.map(
       function(tariff) {
         return {
           value: tariff.id,

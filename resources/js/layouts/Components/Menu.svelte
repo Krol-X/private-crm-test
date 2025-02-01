@@ -8,7 +8,6 @@
 </script>
 
 <div class="menu">
-  <MenuItem href="/">Главная</MenuItem>
   <MenuItem href="/orders">Заказы</MenuItem>
   <MenuItem href="/tariffs">Тарифы</MenuItem>
   <div class="flex-1"></div>

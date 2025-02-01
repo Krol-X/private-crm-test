@@ -21,6 +21,19 @@ class Ration extends Model
         'delivery_date',
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'cooking_date' => 'datetime',
+            'delivery_date' => 'datetime',
+        ];
+    }
+
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);

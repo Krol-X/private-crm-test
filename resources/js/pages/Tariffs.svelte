@@ -21,7 +21,7 @@
 </script>
 
 <Column class="tariffs">
-  {#each tariffs as tariff(tariff.id)}
+  {#each tariffs.data as tariff(tariff.id)}
     <Column class="border-2 border-black hover:border-blue-600 p-2 rounded-lg cursor-pointer"
             click={() => openModal(tariff)}
     >

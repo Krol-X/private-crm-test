@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrdersStoreRequest;
+use App\Http\Resources\OrderCollection;
+use App\Http\Resources\OrderResource;
+use App\Http\Resources\TariffCollection;
 use App\Interfaces\Services\OrdersServiceInterface;
 use App\Interfaces\Services\RationsServiceInterface;
 use App\Interfaces\Services\TariffsServiceInterface;
@@ -31,12 +34,12 @@ class OrdersController extends Controller
     function index(Request $request): \Inertia\Response
     {
         return Inertia::render('Orders', [
-            'orders' => $this->orders->getOrders(),
-            'tariffs' => $this->tariffs->getTariffs()
+            'orders' => new OrderCollection($this->orders->getOrders()),
+            'tariffs' => new TariffCollection($this->tariffs->getTariffs())
         ]);
     }
 
-    function store(OrdersStoreRequest $request): JsonResponse
+    function store(OrdersStoreRequest $request): OrderResource
     {
         $fields = $request->validated();
         $order = $this->orders->addOrder($fields);
@@ -48,17 +51,15 @@ class OrdersController extends Controller
             'last_date' => $fields['last_date'],
         ]);
 
-        return Response::json($order);
+        return new OrderResource($order);
     }
 
-    function show(Request $request, $order_id): JsonResponse
+    function show(Request $request, $order_id): OrderResource|JsonResponse
     {
         $order = $this->orders->getOrder($order_id);
 
         if ($order !== null) {
-            return Response::json([
-                'data' => $order,
-            ]);
+            return new OrderResource($order);
         } else {
             return Response::json(
                 ['error' => 'The requested order was not found'], 404

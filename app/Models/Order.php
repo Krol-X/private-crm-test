@@ -26,6 +26,20 @@ class Order extends Model
         'last_date',
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'first_date' => 'datetime',
+            'last_date' => 'datetime',
+        ];
+    }
+
     public function tariff(): BelongsTo
     {
         return $this->belongsTo(Tariff::class);
