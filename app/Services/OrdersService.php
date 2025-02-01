@@ -12,20 +12,28 @@ class OrdersService implements OrdersServiceInterface
     /**
      * @return Collection<Order>
      */
-    public function getOrders(): Collection
+    public function getOrders($trashed_tariffs = true): Collection
     {
-        $orders = Order::with(['tariff' => function ($query) {
-            $query->withTrashed();
-        }])->get();
+        if ($trashed_tariffs) {
+            $orders = Order::with(['tariff' => function ($query) {
+                $query->withTrashed();
+            }])->get();
+        } else {
+            $orders = Order::with('tariff')->get();
+        }
 
         return $orders;
     }
 
-    public function getOrder(int $id): ?Order
+    public function getOrder(int $id, $trashed_tariffs = true): ?Order
     {
-        $order = Order::with(['tariff' => function ($query) {
-            $query->withTrashed();
-        }])->find($id);
+        if ($trashed_tariffs) {
+            $order = Order::with(['tariff' => function ($query) {
+                $query->withTrashed();
+            }])->find($id);
+        } else {
+            $order = Order::with('tariff')->find($id);
+        }
 
         return $order;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\ServerError;
 use App\Interfaces\Services\OrdersServiceInterface;
 use App\Interfaces\Services\RationsServiceInterface;
 use App\Models\Ration;
@@ -21,6 +22,7 @@ class RationsService implements RationsServiceInterface
 
     /**
      * @return ?Collection<Ration>
+     * @throws ServerError
      */
     public function getRations(int $order_id = null): ?Collection
     {
@@ -31,6 +33,8 @@ class RationsService implements RationsServiceInterface
 
             if ($order) {
                 $rations = $order->rations;
+            } else {
+                throw new ServerError('The requested order was not found', 404);
             }
         } else {
             $rations = Ration::all();
@@ -65,7 +69,7 @@ class RationsService implements RationsServiceInterface
     {
         $order = $this->orders->getOrder($fields['order_id']);
         if (!$order) {
-            return;
+            throw new ServerError('The requested order was not found', 404);
         }
         $cooking_day_before = $order->tariff->cooking_day_before;
         $first_date = Date::parse($fields['first_date']);

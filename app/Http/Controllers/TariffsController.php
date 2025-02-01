@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ServerError;
 use App\Http\Requests\TariffsStoreRequest;
 use App\Http\Requests\TariffsUpdateRequest;
 use App\Http\Resources\TariffCollection;
@@ -32,30 +33,34 @@ class TariffsController extends Controller
     {
         $tariff = $this->tariffs->addTariff($request->validated());
 
-        return new TariffResource($tariff);
+        return response()->json(new TariffResource($tariff));
     }
 
+    /**
+     * @throws ServerError
+     */
     function show(Request $request, $tariff_id): TariffResource|JsonResponse
     {
         $tariff = $this->tariffs->getTariff($tariff_id);
 
         if ($tariff !== null) {
-            return new TariffResource($tariff);
+            return response()->json([
+                'data' => new TariffResource($tariff)
+            ]);
         } else {
-            return Response::json(
-                ['error' => 'The requested tariff was not found'], 404
-            );
+            throw new ServerError('The requested tariff was not found', 404);
         }
     }
 
+    /**
+     * @throws ServerError
+     */
     function update(TariffsUpdateRequest $request, $tariff_id): TariffResource|JsonResponse
     {
         $tariff = $this->tariffs->updateTariff($tariff_id, $request->validated());
 
         if (!$tariff) {
-            return Response::json(
-                ['error' => 'The requested tariff was not found'], 404
-            );
+            throw new ServerError('The requested tariff was not found', 404);
         }
 
         return new TariffResource($tariff);

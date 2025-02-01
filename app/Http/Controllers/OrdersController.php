@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ServerError;
 use App\Http\Requests\OrdersStoreRequest;
 use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
@@ -11,7 +12,6 @@ use App\Interfaces\Services\RationsServiceInterface;
 use App\Interfaces\Services\TariffsServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
 use Inertia\Inertia;
 
 class OrdersController extends Controller
@@ -39,7 +39,7 @@ class OrdersController extends Controller
         ]);
     }
 
-    function store(OrdersStoreRequest $request): OrderResource
+    function store(OrdersStoreRequest $request): JsonResponse
     {
         $fields = $request->validated();
         $order = $this->orders->addOrder($fields);
@@ -51,19 +51,22 @@ class OrdersController extends Controller
             'last_date' => $fields['last_date'],
         ]);
 
-        return new OrderResource($order);
+        return response()->json(new OrderResource($order));
     }
 
-    function show(Request $request, $order_id): OrderResource|JsonResponse
+    /**
+     * @throws ServerError
+     */
+    function show(Request $request, $order_id): JsonResponse
     {
         $order = $this->orders->getOrder($order_id);
 
         if ($order !== null) {
-            return new OrderResource($order);
+            return response()->json([
+                'data' => new OrderResource($order),
+            ]);
         } else {
-            return Response::json(
-                ['error' => 'The requested order was not found'], 404
-            );
+            throw new ServerError('The requested order was not found', 404);
         }
     }
 }
