@@ -4,7 +4,6 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\RationsController;
 use App\Http\Controllers\TariffsController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::resource('/orders', OrdersController::class)
     ->parameter('orders', 'order_id')

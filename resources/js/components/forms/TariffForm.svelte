@@ -1,8 +1,10 @@
 <script>
-  import store from '@/store';
-  import { Button, Column, Context, Input, Text, CheckBox, Row } from '@/lib/structe/index.js';
-  import { router as Inertia } from '@inertiajs/svelte';
   import axios from 'axios';
+  import { router as Inertia } from '@inertiajs/svelte';
+
+  import store from '@/store';
+
+  import { Button, Column, Context, Input, Text, CheckBox, Row } from '@/lib/structe/index.js';
 
   let state = $state(store.modal.params);
   let is_new = $derived(state.fields?.id === undefined);

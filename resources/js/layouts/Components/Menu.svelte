@@ -1,10 +1,10 @@
 <script>
-  const { event } = $props();
-
   import store from '@/store';
 
   import MenuItem from './MenuItem.svelte';
   import IconPlus from '~/assets/icon-plus-square-o.svelte';
+
+  const { event } = $props();
 </script>
 
 <div class="menu">

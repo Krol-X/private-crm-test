@@ -1,10 +1,10 @@
 <script>
-  import store from '@/store/index.js';
-
-  const { children } = $props();
+  import store from '@/store';
 
   import Menu from './Components/Menu.svelte';
-  import { Modal } from '@/lib/structe/index.js';
+  import { Modal } from '@/lib/structe';
+
+  const { children } = $props();
 </script>
 
 <Modal component={store?.modal.component} blur={store?.modal.blur}>

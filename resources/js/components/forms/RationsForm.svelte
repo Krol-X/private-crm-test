@@ -1,8 +1,10 @@
 <script>
-  import store from '@/store';
-  import { Button, Column, Context, Text, Row } from '@/lib/structe/index.js';
-  import OrderForm from './OrderForm.svelte';
   import { onMount } from 'svelte';
+
+  import store from '@/store';
+
+  import OrderForm from './OrderForm.svelte';
+  import { Button, Column, Context, Text, Row } from '@/lib/structe';
 
   let state = $state(store.modal.params);
   const order_id = $derived(state.fields.id);

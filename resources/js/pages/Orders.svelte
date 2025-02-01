@@ -1,16 +1,13 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
+
+  import { SCHEDULE } from '@/constants';
   import store from '@/store';
-  import { Column, Row } from '@/lib/structe/index.js';
+
   import OrderForm from '@/components/forms/OrderForm.svelte';
+  import { Column, Row } from '@/lib/structe';
 
   let { orders, tariffs } = $props();
-
-  const scheduleTypeLabels = {
-    EVERY_DAY: 'Каждый день',
-    EVERY_OTHER_DAY: 'Через день',
-    EVERY_OTHER_DAY_TWICE: 'Через день дважды'
-  };
 
   function openModal(params) {
     if (tariffs.meta.total > 0) {
@@ -53,7 +50,7 @@
       </Row>
       <Row class="w-full justify-between">
         <div>Расписание</div>
-        <div>{scheduleTypeLabels[order.schedule_type]}</div>
+        <div>{SCHEDULE[order.schedule_type]}</div>
       </Row>
       <Row class="w-full justify-between">
         <div>Даты доставки</div>
@@ -65,7 +62,7 @@
       {#if order.comment}
         <Row class="w-full justify-between">
           <div>Комментарий</div>
-          <div class="text-gray-600">{order.comment}</div>
+          <div>{order.comment}</div>
         </Row>
       {/if}
     </Column>

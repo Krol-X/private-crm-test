@@ -2,8 +2,9 @@
   import { onMount, onDestroy } from 'svelte';
 
   import store from '@/store';
-  import { Column, Row } from '@/lib/structe/index.js';
+
   import TariffForm from '@/components/forms/TariffForm.svelte';
+  import { Column, Row } from '@/lib/structe/index.js';
 
   let { tariffs } = $props();
 

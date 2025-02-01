@@ -1,9 +1,12 @@
 <script>
-  import store from '@/store';
-  import { Button, Column, Context, Input, Text, Row, Select } from '@/lib/structe';
-  import { router as Inertia } from '@inertiajs/svelte';
   import axios from 'axios';
+  import { router as Inertia } from '@inertiajs/svelte';
+
+  import { SCHEDULE_OPTIONS } from '@/constants';
+  import store from '@/store';
+
   import RationsForm from './RationsForm.svelte';
+  import { Button, Column, Context, Input, Text, Row, Select } from '@/lib/structe';
 
   let state = $state(store.modal.params);
   const order_id = $derived(state.fields?.id);
@@ -18,12 +21,6 @@
         };
       })
   );
-
-  const scheduleOptions = [
-    { value: 'EVERY_DAY', label: 'Каждый день' },
-    { value: 'EVERY_OTHER_DAY', label: 'Через день' },
-    { value: 'EVERY_OTHER_DAY_TWICE', label: 'Через день дважды' }
-  ];
 
   const onSave = async () => {
     if (is_new) {
@@ -65,7 +62,7 @@
       </Input>
 
       {#if is_new}
-        <Select name="tariff_id" options={tariffOptions} >
+        <Select name="tariff_id" options={tariffOptions}>
           Тариф
         </Select>
       {:else}
@@ -74,7 +71,7 @@
         </Input>
       {/if}
 
-      <Select name="schedule_type" options={scheduleOptions}>
+      <Select name="schedule_type" options={SCHEDULE_OPTIONS}>
         Тип расписания
       </Select>
 
