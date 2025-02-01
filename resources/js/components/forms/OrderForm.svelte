@@ -43,7 +43,7 @@
   const css_title = 'text-center text-lg font-bold';
   const css_form = 'sm:w-96 w-full border border-black rounded-lg p-4 bg-white';
   const css_column = 'mt-4 gap-1';
-  const css_button = 'w-full border border-black';
+  const css_button = 'w-full border border-black hover:border-blue-600';
 </script>
 
 <Context context={state.fields}>
@@ -88,7 +88,7 @@
 
     {#if is_new}
       <Row class="mt-4 gap-4">
-        <Button click={onSave} class="{css_button} bg-black text-white">
+        <Button click={onSave} class="{css_button} bg-black text-white hover:bg-blue-600">
           Сохранить
         </Button>
         <Button click={onClose} class={css_button}>
@@ -97,7 +97,7 @@
       </Row>
     {:else}
       <Column class="mt-4 gap-1">
-        <Button click={openRations} class="{css_button} bg-black text-white">
+        <Button click={openRations} class="{css_button} bg-black text-white hover:bg-blue-600">
           Рационы
         </Button>
         <Button click={onClose} class={css_button}>

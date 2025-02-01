@@ -32,7 +32,7 @@
   const css_title = 'text-center text-lg font-bold';
   const css_form = 'sm:w-96 w-full border border-black rounded-lg p-4 bg-white';
   const css_column = 'mt-4 gap-1';
-  const css_button = 'w-full border border-black';
+  const css_button = 'w-full border border-black hover:border-blue-600';
 </script>
 
 <Context context={state.fields}>
@@ -45,7 +45,7 @@
       <CheckBox name="cooking_day_before">Готовить за день</CheckBox>
     </Column>
     <Row class="mt-4 gap-4">
-      <Button click={onSave} class="{css_button} bg-black text-white">
+      <Button click={onSave} class="{css_button} bg-black text-white hover:bg-blue-600">
         Сохранить
       </Button>
       <Button click={onClose} class={css_button}>
@@ -53,7 +53,7 @@
       </Button>
     </Row>
     {#if !is_new}
-      <Button click={onDelete} class="{css_button} mt-2 bg-red-800 text-white">
+      <Button click={onDelete} class="{css_button} mt-2 bg-red-800 text-white hover:bg-red-600">
         Удалить
       </Button>
     {/if}

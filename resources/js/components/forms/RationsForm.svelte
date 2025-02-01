@@ -16,7 +16,7 @@
   const css_title = 'text-center text-lg font-bold';
   const css_form = 'sm:w-96 w-full max-h-screen border border-black rounded-lg p-4 bg-white';
   const css_column = 'mt-4 gap-2 overflow-y-auto';
-  const css_button = 'w-full border border-black';
+  const css_button = 'w-full border border-black hover:border-blue-600';
 
   onMount(async () => {
     await store.rations.fetch(order_id);
