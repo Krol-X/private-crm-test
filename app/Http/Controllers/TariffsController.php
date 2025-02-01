@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TariffsStoreRequest;
+use App\Http\Requests\TariffsUpdateRequest;
 use App\Interfaces\Services\TariffsServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class TariffsController extends Controller
@@ -26,21 +26,11 @@ class TariffsController extends Controller
         ]);
     }
 
-    function store(Request $request): JsonResponse
+    function store(TariffsStoreRequest $request): JsonResponse
     {
-        $data = Validator::make($request->all(), [
-            'ration_name' => 'string|required',
-            'cooking_day_before' => 'boolean|required',
-        ]);
-
-        if ($data->fails()) {
-            return response()->json(['error' => $data->errors()], 400);
-        }
-
-        $tariff = $this->tariffs->addTariff($data->validated());
+        $tariff = $this->tariffs->addTariff($request->validated());
 
         return Response::json($tariff);
-//        return Redirect::route('tariffs');
     }
 
     function show(Request $request, $tariff_id): JsonResponse
@@ -58,18 +48,9 @@ class TariffsController extends Controller
         }
     }
 
-    function update(Request $request, $tariff_id): JsonResponse
+    function update(TariffsUpdateRequest $request, $tariff_id): JsonResponse
     {
-        $data = Validator::make($request->all(), [
-            'ration_name' => 'string|nullable',
-            'cooking_day_before' => 'boolean|nullable',
-        ]);
-
-        if ($data->fails()) {
-            return response()->json(['error' => $data->errors()], 400);
-        }
-
-        $tariff = $this->tariffs->updateTariff($tariff_id, $data->validated());
+        $tariff = $this->tariffs->updateTariff($tariff_id, $request->validated());
 
         if (!$tariff) {
             return Response::json(

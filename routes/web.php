@@ -20,6 +20,10 @@ Route::resource('/orders', OrdersController::class)
         // 'edit',
         // 'update',
         // 'destroy',
+    ])->names([
+        'index' => 'orders.index',
+        'store' => 'orders.store',
+        'show' => 'orders.show',
     ]);
 
 Route::resource('/tariffs', TariffsController::class)
@@ -32,6 +36,12 @@ Route::resource('/tariffs', TariffsController::class)
         // 'edit',
         'update',
         'destroy',
+    ])->names([
+        'index' => 'tariffs.index',
+        'store' => 'tariffs.store',
+        'show' => 'tariffs.show',
+        'update' => 'tariffs.update',
+        'destroy' => 'tariffs.destroy',
     ]);
 
 Route::resource('/rations', RationsController::class)
@@ -44,4 +54,7 @@ Route::resource('/rations', RationsController::class)
         // 'edit',
         // 'update',
         // 'destroy',
+    ])->names([
+        'index' => 'rations.index',
+        'show' => 'rations.show',
     ]);

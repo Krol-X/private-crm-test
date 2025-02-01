@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrdersStoreRequest;
 use App\Interfaces\Services\OrdersServiceInterface;
 use App\Interfaces\Services\RationsServiceInterface;
 use App\Interfaces\Services\TariffsServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class OrdersController extends Controller
@@ -36,23 +36,9 @@ class OrdersController extends Controller
         ]);
     }
 
-    function store(Request $request): JsonResponse
+    function store(OrdersStoreRequest $request): JsonResponse
     {
-        $data = Validator::make($request->all(), [
-            'client_name' => 'string|required',
-            'client_phone' => 'string|size:11|required|unique:orders,client_phone',
-            'tariff_id' => 'integer|required|exists:tariffs,id',
-            'schedule_type' => 'in:EVERY_DAY,EVERY_OTHER_DAY,EVERY_OTHER_DAY_TWICE|required',
-            'comment' => 'string|required',
-            'first_date' => 'date|required',
-            'last_date' => 'date|required',
-        ]);
-
-        if ($data->fails()) {
-            return response()->json(['error' => $data->errors()], 400);
-        }
-
-        $fields = $data->validated();
+        $fields = $request->validated();
         $order = $this->orders->addOrder($fields);
 
         $this->rations->addRations([

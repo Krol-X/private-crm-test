@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RationsIndexRequest;
 use App\Interfaces\Services\RationsServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Validator;
 
 class RationsController extends Controller
 {
@@ -19,17 +19,9 @@ class RationsController extends Controller
         $this->rations = $rations_service;
     }
 
-    function index(Request $request): JsonResponse
+    function index(RationsIndexRequest $request): JsonResponse
     {
-        $data = Validator::make($request->all(), [
-            'order_id' => 'nullable|integer|exists:orders,id',
-        ]);
-
-        if ($data->fails()) {
-            return response()->json(['error' => $data->errors()], 400);
-        }
-
-        $fields = collect($data->validated());
+        $fields = collect($request->validated());
         $rations = $this->rations->getRations($fields->get('order_id', null));
 
         if ($rations !== null) {
